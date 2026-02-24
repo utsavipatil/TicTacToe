@@ -1,5 +1,9 @@
 package com.utsavi.tictactoe;
 
 public class Symbol {
-  private char symbol;
+  private String symbol;
+
+  public Symbol(String symbol){
+    this.symbol = symbol;
+  }
 }
