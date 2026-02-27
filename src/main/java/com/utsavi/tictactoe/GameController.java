@@ -2,8 +2,8 @@ package com.utsavi.tictactoe;
 
 import com.utsavi.tictactoe.stratergies.ColumnWinningStratergy;
 import com.utsavi.tictactoe.stratergies.DiagonalWinningStratergy;
-import com.utsavi.tictactoe.stratergies.RowWinningStratergy;
-import com.utsavi.tictactoe.stratergies.WinningStratergy;
+import com.utsavi.tictactoe.stratergies.RowWinningStrategy;
+import com.utsavi.tictactoe.stratergies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class GameController {
     List<Player> players = getPlayers(dimension);
 
     //Ask for winning strategies
-    List<WinningStratergy> winningStratergyList = getWinningStratergy();
+    List<WinningStrategy> winningStratergyList = getWinningStrategy();
 
     //Create Game Object
     return new Game(dimension , players , winningStratergyList);
@@ -32,18 +32,11 @@ public class GameController {
   }
 
   public void makeMove(Game game){
-    //TODO
-    //It should take input of the move
-    //validate
-    //update board
-    //check winner and update state if required
-
     game.makeMove();
   }
 
-  public String getWinner(Game game){
-    //TODO
-    return null;
+  public Player getWinner(Game game){
+    return game.getWinner();
   }
 
   public GameState getGameState(Game game){
@@ -61,7 +54,7 @@ public class GameController {
     System.out.println("Let's add players now: ");
     List<Player> players = new ArrayList<>();
 
-    for(int i = 0; i< dimension - 1; i++){
+    for(int i = 0; i< dimension - 1 ; i++){
       System.out.println("Add Player details : Name Symbol");
       String details = scanner.nextLine();
       String[] detailsArray = details.split(" ");
@@ -72,26 +65,26 @@ public class GameController {
     System.out.println("Do you want bot ? [YES/NO] ");
     String result = scanner.nextLine();
 
-    if(result.equalsIgnoreCase("yes")){
-      System.out.println("Add Bot details: Symbol");
-      String symbol = scanner.nextLine();
-      System.out.println("Choose difficulty level: [EASY / MEDIUM / HARD]");
-      String level = scanner.nextLine();
-      BotDifficultyLevel difficultyLevel = BotDifficultyLevel.valueOf(level.trim().toUpperCase());
-      Player player = new Bot(players.size(), "BOT" , PlayerType.BOT, new Symbol(symbol), difficultyLevel);
-      players.add(player);
-    }
+//    if(result.equalsIgnoreCase("yes")){
+//      System.out.println("Add Bot details: Symbol");
+//      String symbol = scanner.nextLine();
+//      System.out.println("Choose difficulty level: [EASY / MEDIUM / HARD]");
+//      String level = scanner.nextLine();
+//      BotDifficultyLevel difficultyLevel = BotDifficultyLevel.valueOf(level.trim().toUpperCase());
+//      Player player = new Bot(players.size(), "BOT" , PlayerType.BOT, new Symbol(symbol), difficultyLevel);
+//      players.add(player);
+//    }
     return players;
   }
 
-  private List<WinningStratergy> getWinningStratergy(){
+  private List<WinningStrategy> getWinningStrategy(){
     System.out.println("Do you want Raw Winning ? [YES/NO]");
-    List<WinningStratergy> winningStratergyList = new ArrayList<>();
+    List<WinningStrategy> winningStratergyList = new ArrayList<>();
 
     String result = scanner.nextLine();
 
     if(result.equalsIgnoreCase("YES")){
-      winningStratergyList.add(new RowWinningStratergy());
+      winningStratergyList.add(new RowWinningStrategy());
     }
 
     System.out.println("Do you want Col Winning ? [YES/NO]");

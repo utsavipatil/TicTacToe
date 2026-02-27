@@ -8,7 +8,7 @@ public class Cell {
 
   public void display(){
     if(cellState.equals(CellState.FILLED)){
-      System.out.print("[{}] "+ player.getSymbol());
+      System.out.print("[" + player.getSymbol().getSymbol() + "] ");
     }else{
       System.out.print("[ ] ");
     }

@@ -1,6 +1,6 @@
 package com.utsavi.tictactoe;
 
-import com.utsavi.tictactoe.stratergies.WinningStratergy;
+import com.utsavi.tictactoe.stratergies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ public class Game {
   private GameState gameState;
   private Player winner;
   private int nextPlayerIndex;
-  private List<WinningStratergy> winningStratergies;
+  private List<WinningStrategy> winningStratergies;
   private List<Move> moves;
 
-  public Game(int dimension, List<Player> players, List<WinningStratergy> winningStrategies){
+  public Game(int dimension, List<Player> players, List<WinningStrategy> winningStrategies){
     this.board = new Board(dimension);
     this.players = players;
     this.gameState = GameState.IN_PROGRESS;
@@ -31,13 +31,14 @@ public class Game {
   public void makeMove(){
     // Input from player
     Player currentPlayer = players.get(nextPlayerIndex);
-    Move move = currentPlayer.makeMove();
+    Move move = currentPlayer.makeMove(board);
 
     // Validate input
     try{
       validateMove(move);
     }catch (Exception exception){
       System.out.println(exception.getMessage() + " Please try again !!!");
+      return;
     }
 
     //Update state of game
@@ -59,7 +60,7 @@ public class Game {
     currentCell.setPlayer(currentPlayer);
 
     nextPlayerIndex++;
-    nextPlayerIndex %= getBoard().getSize(); //To rotate circularly
+    nextPlayerIndex %= getPlayers().size(); //To rotate circularly
 
     move.setCell(currentCell);
 
@@ -68,7 +69,7 @@ public class Game {
   }
 
   public boolean checkWinner(Move move){
-    for(WinningStratergy strategy : winningStratergies){
+    for(WinningStrategy strategy : winningStratergies){
       if(strategy.checkWinner(getBoard(), move)){
         return true;
       }
@@ -84,7 +85,7 @@ public class Game {
     //Validate cell
     int row = move.getCell().getRow(), col = move.getCell().getColumn();
 
-    if(row < 0 || row > getBoard().getSize() || col < 0 || col > getBoard().getSize()){
+    if(row < 0 || row >= getBoard().getSize() || col < 0 || col >= getBoard().getSize()){
       throw new RuntimeException("Invalid move :(");
     }
 
@@ -135,11 +136,11 @@ public class Game {
     this.nextPlayerIndex = nextPlayerIndex;
   }
 
-  public List<WinningStratergy> getWinningStratergies() {
+  public List<WinningStrategy> getWinningStratergies() {
     return winningStratergies;
   }
 
-  public void setWinningStratergies(List<WinningStratergy> winningStratergies) {
+  public void setWinningStratergies(List<WinningStrategy> winningStratergies) {
     this.winningStratergies = winningStratergies;
   }
 

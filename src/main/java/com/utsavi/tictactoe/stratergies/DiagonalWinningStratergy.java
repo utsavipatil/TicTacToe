@@ -3,9 +3,9 @@ package com.utsavi.tictactoe.stratergies;
 import com.utsavi.tictactoe.Board;
 import com.utsavi.tictactoe.Move;
 
-public class DiagonalWinningStratergy implements WinningStratergy{
+public class DiagonalWinningStratergy implements WinningStrategy {
   @Override
-  public boolean checkMove(Board board, Move move) {
+  public boolean checkWinner(Board board, Move move) {
     return false;
   }
 }
