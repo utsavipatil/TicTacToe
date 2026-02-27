@@ -28,6 +28,73 @@ public class Game {
     board.display();
   }
 
+  public void makeMove(){
+    // Input from player
+    Player currentPlayer = players.get(nextPlayerIndex);
+    Move move = currentPlayer.makeMove();
+
+    // Validate input
+    try{
+      validateMove(move);
+    }catch (Exception exception){
+      System.out.println(exception.getMessage() + " Please try again !!!");
+    }
+
+    //Update state of game
+    updateGame(move, currentPlayer);
+
+    //Check winner
+    if(checkWinner(move)){
+      winner = move.getPlayer();
+      setGameState(GameState.SUCCESS);
+    }else if(checkDraw()){
+      setGameState(GameState.DRAW);
+    }
+  }
+
+  public void updateGame(Move move, Player currentPlayer){
+    int row = move.getCell().getRow(), col = move.getCell().getColumn();
+    Cell currentCell = getBoard().getCell(row , col);
+    currentCell.setCellState(CellState.FILLED);
+    currentCell.setPlayer(currentPlayer);
+
+    nextPlayerIndex++;
+    nextPlayerIndex %= getBoard().getSize(); //To rotate circularly
+
+    move.setCell(currentCell);
+
+    //Add to list of moves
+    moves.add(move);
+  }
+
+  public boolean checkWinner(Move move){
+    for(WinningStratergy strategy : winningStratergies){
+      if(strategy.checkWinner(getBoard(), move)){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean checkDraw(){
+    return board.getSize() * board.getSize() == moves.size();
+  }
+
+  public void validateMove(Move move){
+    //Validate cell
+    int row = move.getCell().getRow(), col = move.getCell().getColumn();
+
+    if(row < 0 || row > getBoard().getSize() || col < 0 || col > getBoard().getSize()){
+      throw new RuntimeException("Invalid move :(");
+    }
+
+    //Validate CellState
+    CellState cellState = getBoard().getCell(row, col).getCellState();
+    if(cellState.equals(CellState.FILLED)){
+      throw new RuntimeException("Invalid move !!! Cell is already filled :(");
+    }
+  }
+
   public Board getBoard() {
     return board;
   }

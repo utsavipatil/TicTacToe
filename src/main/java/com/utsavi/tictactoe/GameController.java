@@ -37,6 +37,8 @@ public class GameController {
     //validate
     //update board
     //check winner and update state if required
+
+    game.makeMove();
   }
 
   public String getWinner(Game game){

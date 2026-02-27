@@ -13,6 +13,8 @@ public abstract class Player {
     this.playerType = playerType;
   }
 
+  public abstract Move makeMove();
+
   public int getId() {
     return id;
   }

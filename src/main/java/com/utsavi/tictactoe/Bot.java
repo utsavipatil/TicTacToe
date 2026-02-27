@@ -8,4 +8,10 @@ public class Bot extends Player{
     super(id, name , playerType , symbol);
     this.botDifficultyLevel = botDifficultyLevel;
   }
+
+  @Override
+  public Move makeMove(){
+    System.out.println("Hey ! " + getName() + " Its your turn. Please make move.");
+    return null;
+  }
 }

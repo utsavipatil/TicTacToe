@@ -34,6 +34,10 @@ public class Board {
     System.out.println();
   }
 
+  public Cell getCell(int row, int col){
+    return getGrid().get(row).get(col);
+  }
+
   public List<List<Cell>> getGrid() {
     return grid;
   }
