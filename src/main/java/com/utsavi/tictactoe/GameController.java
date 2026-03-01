@@ -54,14 +54,6 @@ public class GameController {
     System.out.println("Let's add players now: ");
     List<Player> players = new ArrayList<>();
 
-    for(int i = 0; i< dimension - 1 ; i++){
-      System.out.println("Add Player details : Name Symbol");
-      String details = scanner.nextLine();
-      String[] detailsArray = details.split(" ");
-      Player player = new Human(i , detailsArray[0] , PlayerType.HUMAN, new Symbol(detailsArray[1]));
-      players.add(player);
-    }
-
     System.out.println("Do you want bot ? [YES/NO] ");
     String result = scanner.nextLine();
 
@@ -71,7 +63,17 @@ public class GameController {
       System.out.println("Choose difficulty level: [EASY / MEDIUM / HARD]");
       String level = scanner.nextLine();
       BotDifficultyLevel difficultyLevel = BotDifficultyLevel.valueOf(level.trim().toUpperCase());
-      Player player = new Bot(players.size(), "BOT" , PlayerType.BOT, new Symbol(symbol), difficultyLevel);
+      Player player = new Bot(0, "BOT" , PlayerType.BOT, new Symbol(symbol), difficultyLevel);
+      players.add(player);
+    }
+
+    int countOfPlayer = players.size() == 1 ? 1 : 0;
+
+    for(int i = countOfPlayer; i< dimension - 1 ; i++){
+      System.out.println("Add Player details : Name Symbol");
+      String details = scanner.nextLine();
+      String[] detailsArray = details.split(" ");
+      Player player = new Human(i , detailsArray[0] , PlayerType.HUMAN, new Symbol(detailsArray[1]));
       players.add(player);
     }
     return players;
