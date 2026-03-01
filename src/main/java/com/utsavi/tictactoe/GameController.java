@@ -1,7 +1,7 @@
 package com.utsavi.tictactoe;
 
 import com.utsavi.tictactoe.stratergies.ColumnWinningStratergy;
-import com.utsavi.tictactoe.stratergies.DiagonalWinningStratergy;
+import com.utsavi.tictactoe.stratergies.DiagonalWinningStrategy;
 import com.utsavi.tictactoe.stratergies.RowWinningStrategy;
 import com.utsavi.tictactoe.stratergies.WinningStrategy;
 
@@ -65,15 +65,15 @@ public class GameController {
     System.out.println("Do you want bot ? [YES/NO] ");
     String result = scanner.nextLine();
 
-//    if(result.equalsIgnoreCase("yes")){
-//      System.out.println("Add Bot details: Symbol");
-//      String symbol = scanner.nextLine();
-//      System.out.println("Choose difficulty level: [EASY / MEDIUM / HARD]");
-//      String level = scanner.nextLine();
-//      BotDifficultyLevel difficultyLevel = BotDifficultyLevel.valueOf(level.trim().toUpperCase());
-//      Player player = new Bot(players.size(), "BOT" , PlayerType.BOT, new Symbol(symbol), difficultyLevel);
-//      players.add(player);
-//    }
+    if(result.equalsIgnoreCase("yes")){
+      System.out.println("Add Bot details: Symbol");
+      String symbol = scanner.nextLine();
+      System.out.println("Choose difficulty level: [EASY / MEDIUM / HARD]");
+      String level = scanner.nextLine();
+      BotDifficultyLevel difficultyLevel = BotDifficultyLevel.valueOf(level.trim().toUpperCase());
+      Player player = new Bot(players.size(), "BOT" , PlayerType.BOT, new Symbol(symbol), difficultyLevel);
+      players.add(player);
+    }
     return players;
   }
 
@@ -96,7 +96,7 @@ public class GameController {
     System.out.println("Do you want Diagonal Winning ? [YES/NO]");
     result = scanner.nextLine();
     if(result.equalsIgnoreCase("YES")){
-      winningStratergyList.add(new DiagonalWinningStratergy());
+      winningStratergyList.add(new DiagonalWinningStrategy());
     }
 
     return winningStratergyList;
