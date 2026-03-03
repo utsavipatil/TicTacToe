@@ -5,4 +5,6 @@ import com.utsavi.tictactoe.Move;
 
 public interface WinningStrategy {
   boolean checkWinner(Board board , Move move);
+
+  boolean handleUndo(Board board, Move move);
 }

@@ -35,6 +35,10 @@ public class GameController {
     game.makeMove();
   }
 
+  public void undo(Game game){
+    game.undo(game);
+  }
+
   public Player getWinner(Game game){
     return game.getWinner();
   }
@@ -89,17 +93,17 @@ public class GameController {
       winningStratergyList.add(new RowWinningStrategy());
     }
 
-    System.out.println("Do you want Col Winning ? [YES/NO]");
-    result = scanner.nextLine();
-    if(result.equalsIgnoreCase("YES")){
-      winningStratergyList.add(new ColumnWinningStratergy());
-    }
-
-    System.out.println("Do you want Diagonal Winning ? [YES/NO]");
-    result = scanner.nextLine();
-    if(result.equalsIgnoreCase("YES")){
-      winningStratergyList.add(new DiagonalWinningStrategy());
-    }
+//    System.out.println("Do you want Col Winning ? [YES/NO]");
+//    result = scanner.nextLine();
+//    if(result.equalsIgnoreCase("YES")){
+//      winningStratergyList.add(new ColumnWinningStratergy());
+//    }
+//
+//    System.out.println("Do you want Diagonal Winning ? [YES/NO]");
+//    result = scanner.nextLine();
+//    if(result.equalsIgnoreCase("YES")){
+//      winningStratergyList.add(new DiagonalWinningStrategy());
+//    }
 
     return winningStratergyList;
   }

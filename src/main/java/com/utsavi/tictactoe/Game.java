@@ -11,7 +11,7 @@ public class Game {
   private GameState gameState;
   private Player winner;
   private int nextPlayerIndex;
-  private List<WinningStrategy> winningStratergies;
+  private List<WinningStrategy> winningStrategies;
   private List<Move> moves;
 
   public Game(int dimension, List<Player> players, List<WinningStrategy> winningStrategies){
@@ -20,7 +20,7 @@ public class Game {
     this.gameState = GameState.IN_PROGRESS;
     this.winner = null;
     this.nextPlayerIndex = 0;
-    this.winningStratergies = winningStrategies;
+    this.winningStrategies = winningStrategies;
     this.moves = new ArrayList<>();
   }
 
@@ -51,6 +51,34 @@ public class Game {
     }else if(checkDraw()){
       setGameState(GameState.DRAW);
     }
+
+  }
+
+  public void undo(Game game){
+     if(moves.isEmpty()){
+       System.out.println("There is nothing to undo. Be serious !!!");
+       return;
+     }
+     Move lastMove = moves.getLast();
+
+     Cell cell = lastMove.getCell();
+     cell.setPlayer(null);
+     cell.setCellState(CellState.EMPTY);
+
+     nextPlayerIndex--;
+     nextPlayerIndex = (nextPlayerIndex + players.size()) % players.size();
+
+     moves.remove(lastMove);
+
+     //update strategy
+    for(WinningStrategy winningStrategy: winningStrategies){
+      winningStrategy.handleUndo(board, lastMove);
+    }
+
+    setWinner(null);
+    setGameState(GameState.IN_PROGRESS);
+
+
   }
 
   public void updateGame(Move move, Player currentPlayer){
@@ -69,7 +97,7 @@ public class Game {
   }
 
   public boolean checkWinner(Move move){
-    for(WinningStrategy strategy : winningStratergies){
+    for(WinningStrategy strategy : winningStrategies){
       if(strategy.checkWinner(getBoard(), move)){
         return true;
       }
@@ -137,11 +165,11 @@ public class Game {
   }
 
   public List<WinningStrategy> getWinningStratergies() {
-    return winningStratergies;
+    return winningStrategies;
   }
 
   public void setWinningStratergies(List<WinningStrategy> winningStratergies) {
-    this.winningStratergies = winningStratergies;
+    this.winningStrategies = winningStratergies;
   }
 
   public List<Move> getMoves() {
