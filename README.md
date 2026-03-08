@@ -1,4 +1,4 @@
-[# TicTacToe Console Engine
+# TicTacToe Console Engine
 
 ## Overview
 This project is a console-first TicTacToe engine built with Java 17 and the Spring Boot scaffolding (Boot is currently disabled in `main`). The game runs entirely through standard input/output and relies on a lightweight domain model to represent boards, players (human or bot), moves, and winning strategies. The application emphasizes clean separation between the controller (`GameController`), the game domain (`Game`, `Board`, `Move`, etc.), and pluggable strategy interfaces.
